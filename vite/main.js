@@ -7,6 +7,7 @@ import { setupGUI } from "./setupGUI.js";
 import { setupScrollBehavior } from "./scrollBehavior.js";
 import { setupParticleSystem } from "./particles";
 import { revealSite, loadingFinished } from "./loadingAnimation";
+import { fadeTrigger } from "./imageInteractor";
 
 // Scene
 const scene = new THREE.Scene();
@@ -55,7 +56,11 @@ loader.load(
 );
 
 // Objects
-const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+const material = new THREE.MeshBasicMaterial({
+  color: 0xffffff,
+  transparent: true,
+  opacity: 0,
+});
 
 // Interactive planes
 const planeWidth = 10;
@@ -64,9 +69,10 @@ const geometry = new THREE.PlaneGeometry(planeWidth, planeHeight);
 
 // Plane mesh
 const plane = new THREE.Mesh(geometry, material);
-plane.position.set(-2.7, 1.7, 26.2);
+plane.position.set(-3, 1.8, 26.2);
 //plane.scale.set(-3.3, 1.7, 26.2);
-plane.scale.set(0.5, 0.3, 0.1); // For a flat plane, set rotation to 0
+plane.scale.set(0.5, 0.3, 0.1);
+plane.opacity = 0;
 scene.add(plane);
 
 // Sizes
@@ -119,27 +125,6 @@ noisePlane.scale.set(0.8, 0.8, 0.8);
 // Add the noise plane to the scene
 scene.add(noisePlane);
 
-export { camera, plane };
-
-// Animation
-const tick = () => {
-  // const currentTime = Date.now();
-  // const deltaTime = currentTime - time;
-  // time = currentTime;
-  // mesh.rotation.y += 0.001 * deltaTime;
-  noisePlane.position.copy(camera.position);
-  noisePlane.position.z -= 0.6;
-  renderer.render(scene, camera);
-  window.requestAnimationFrame(tick);
-
-  //cameraDistance(camera, plane);
-
-  // Calculate the distance between the camera and the plane
-  const cameraToPlaneDistance = camera.position.distanceTo(plane.position);
-};
-
-tick();
-
 // Resizer
 window.addEventListener("resize", () => {
   // Update sizes
@@ -153,6 +138,23 @@ window.addEventListener("resize", () => {
 
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
+
+export { camera, plane, sizes };
+
+// Animation
+const tick = () => {
+  // const currentTime = Date.now();
+  // const deltaTime = currentTime - time;
+  // time = currentTime;
+  // mesh.rotation.y += 0.001 * deltaTime;
+  noisePlane.position.copy(camera.position);
+  noisePlane.position.z -= 0.6;
+  renderer.render(scene, camera);
+  window.requestAnimationFrame(tick);
+  fadeTrigger(camera, plane);
+};
+
+tick();
 
 // Call setupGUI and pass renderer as a parameter
 setupGUI(camera, material, myModel, plane);
