@@ -1,59 +1,10 @@
 import gsap from "gsap";
 import * as THREE from "three";
+import { revealSite, loadingFinished } from "./loadingAnimation";
 
-// Function to reveal the site after the loading bar completes
-function revealSite() {
-  const loadingScreen = document.getElementById("loading-screen");
-  const mainContent = document.getElementById("main-content");
-  const loadingTitle = document.querySelector(".loading-title");
-  const loadingNumber = document.getElementById("loading-number");
-  const timeline = gsap.timeline();
-
-  // Fade out the "Entering portfolio" text and the loading percentage
-  timeline.to([loadingTitle, loadingNumber], {
-    opacity: 0,
-    duration: 0.5,
-    stagger: 0.0,
-    onComplete: () => {
-      // Hide the loading screen and reveal the main content
-      timeline.to(loadingScreen, {
-        opacity: 0,
-        duration: 1,
-        onComplete: () => {
-          loadingScreen.style.display = "none";
-          mainContent.style.opacity = "1";
-
-          // Fade out the background
-          timeline.to(document.body, {
-            backgroundColor: "transparent",
-            duration: 1,
-          });
-        },
-      });
-    },
-  });
-}
-
-// Function to fill the loading bar
-function fillLoadingBar() {
-  const loadingProgress = document.getElementById("loading-number");
-
-  // Update the loading progress text as the loading bar fills up
-  let progress = 0;
-  const updateProgress = () => {
-    progress += 2;
-    loadingProgress.textContent = progress + "%";
-    if (progress < 100) {
-      requestAnimationFrame(updateProgress);
-    } else {
-      // When the progress reaches 100%, reveal the site
-      revealSite();
-    }
-  };
-  requestAnimationFrame(updateProgress);
-}
-
-fillLoadingBar();
+const mainText = document.getElementById("middle-text");
+const underText = document.getElementById("under-text");
+const arrowDown = document.querySelector(".arrow-down");
 
 function handleScroll(deltaY, camera, light, scene, hueObject, fogColor) {
   const scrollDirection = deltaY > 0 ? -0.7 : 0.7;
@@ -103,7 +54,12 @@ export function setupScrollBehavior(camera, light, scene, fogColor, renderer) {
 
   // Wheel Event for Desktop
   window.addEventListener("wheel", function (e) {
-    handleScroll(e.deltaY, camera, light, scene, hue, fogColor);
+    if (loadingFinished === true) {
+      handleScroll(e.deltaY, camera, light, scene, hue, fogColor);
+      mainText.style.opacity = 0;
+      underText.style.opacity = 0;
+      arrowDown.style.opacity = 0;
+    }
   });
 
   // Touch Events for Mobile
@@ -118,11 +74,13 @@ export function setupScrollBehavior(camera, light, scene, fogColor, renderer) {
   window.addEventListener(
     "touchmove",
     function (e) {
-      const currentTouchY = e.touches[0].clientY;
-      const deltaY = lastTouchY - currentTouchY;
-      lastTouchY = currentTouchY;
+      if (loadingFinished === true) {
+        const currentTouchY = e.touches[0].clientY;
+        const deltaY = lastTouchY - currentTouchY;
+        lastTouchY = currentTouchY;
 
-      handleScroll(deltaY, camera, light, scene, hue, fogColor);
+        handleScroll(deltaY, camera, light, scene, hue, fogColor);
+      }
     },
     { passive: true }
   );

@@ -6,6 +6,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { setupGUI } from "./setupGUI.js";
 import { setupScrollBehavior } from "./scrollBehavior.js";
 import { setupParticleSystem } from "./particles";
+import { revealSite, loadingFinished } from "./loadingAnimation";
 
 // Scene
 const scene = new THREE.Scene();
@@ -38,7 +39,7 @@ loader.load(
     myModel.rotation.set(-1.57, -1.57, -1.57);
 
     // Once the model is loaded, initialize the colors and camera position
-    initializeSceneColorsAndCamera(camera, directionalLight, scene, fogColor);
+    //initializeSceneColorsAndCamera(camera, directionalLight, scene, fogColor);
 
     // myModel.traverse((child) => {
     //   if (child instanceof THREE.Mesh) {

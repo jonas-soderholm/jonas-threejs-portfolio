@@ -72,6 +72,7 @@ body {
   z-index: 10;
   font-size: 4.5vh;
   text-align: center;
+  transition: opacity 0.5s ease;
 }
 
 .arrow-down {
@@ -79,8 +80,8 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 5vh;
-  width: 5vh;
+  height: 2vh;
+  width: auto;
   background-color: rgba(0, 0, 0, 0);
   color: white;
   position: absolute;
@@ -88,7 +89,8 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
-  margin-top: 20vh;
+  margin-top: 19vh;
+  transition: opacity 0.5s ease;
 }
 
 #under-text {
@@ -125,13 +127,15 @@ body {
   z-index: 11;
 }
 
-/* Button styling (optional) */
-#start-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
+.arrow-down {
+  animation: bounce 0.5s infinite alternate;
 }
 
-.start-text {
-  /* display: none; */
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-5px); /* Adjust the bounce height as needed */
+  }
 }
