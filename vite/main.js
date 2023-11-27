@@ -37,6 +37,9 @@ loader.load(
     myModel.scale.set(1, 1, 1);
     myModel.rotation.set(-1.57, -1.57, -1.57);
 
+    // Once the model is loaded, initialize the colors and camera position
+    initializeSceneColorsAndCamera(camera, directionalLight, scene, fogColor);
+
     // myModel.traverse((child) => {
     //   if (child instanceof THREE.Mesh) {
     //     // Check if the child is a mesh

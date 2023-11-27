@@ -11,20 +11,30 @@
     ></script>
   </head>
   <body>
-    <div class="start-text">
-      <div id="middle-text">
-        <h1>Jonas Söderholm</h1>
+    <div id="loading-screen">
+      <div id="loading-text">
+        <h1 class="loading-title">Entering portfolio</h1>
+        <div id="loading-number">0%</div>
       </div>
-      <div id="under-text">
-        <h1>Scroll to explore</h1>
+      <div id="loading-bar"></div>
+    </div>
+
+    <div id="main-content">
+      <div class="start-text">
+        <div id="middle-text">
+          <h1>Jonas Söderholm</h1>
+        </div>
+        <div id="under-text">
+          <h1>Scroll to explore</h1>
+        </div>
       </div>
+      <div class="hamburger-menu">
+        <h1>O</h1>
+      </div>
+      <img src="/arrow-down.png" alt="" class="arrow-down" />
+      <img src="/sweden-flag.png" alt="" class="flag" />
+      <canvas class="webgl"></canvas>
+      <script type="module" src="./main.js"></script>
     </div>
-    <div class="hamburger-menu">
-      <h1>O</h1>
-    </div>
-    <img src="/arrow-down.png" alt="" class="arrow-down" />
-    <img src="/sweden-flag.png" alt="" class="flag" />
-    <canvas class="webgl"></canvas>
-    <script type="module" src="./main.js"></script>
   </body>
 </html>
