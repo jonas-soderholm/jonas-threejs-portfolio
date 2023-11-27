@@ -57,6 +57,18 @@ loader.load(
 // Objects
 const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
 
+// Interactive planes
+const planeWidth = 10;
+const planeHeight = 10;
+const geometry = new THREE.PlaneGeometry(planeWidth, planeHeight);
+
+// Plane mesh
+const plane = new THREE.Mesh(geometry, material);
+plane.position.set(-2.7, 1.7, 26.2);
+//plane.scale.set(-3.3, 1.7, 26.2);
+plane.scale.set(0.5, 0.3, 0.1); // For a flat plane, set rotation to 0
+scene.add(plane);
+
 // Sizes
 const sizes = {
   width: window.innerWidth,
@@ -66,7 +78,7 @@ const sizes = {
 // Camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
 camera.position.z = 50;
-camera.position.y = 0.9;
+camera.position.y = 1.8;
 camera.position.x = -3;
 scene.add(camera);
 
@@ -107,6 +119,8 @@ noisePlane.scale.set(0.8, 0.8, 0.8);
 // Add the noise plane to the scene
 scene.add(noisePlane);
 
+export { camera, plane };
+
 // Animation
 const tick = () => {
   // const currentTime = Date.now();
@@ -117,6 +131,11 @@ const tick = () => {
   noisePlane.position.z -= 0.6;
   renderer.render(scene, camera);
   window.requestAnimationFrame(tick);
+
+  //cameraDistance(camera, plane);
+
+  // Calculate the distance between the camera and the plane
+  const cameraToPlaneDistance = camera.position.distanceTo(plane.position);
 };
 
 tick();
@@ -136,7 +155,7 @@ window.addEventListener("resize", () => {
 });
 
 // Call setupGUI and pass renderer as a parameter
-setupGUI(camera, material, myModel, fogColor, renderer);
+setupGUI(camera, material, myModel, plane);
 
 // Call setupScrollBehavior and pass renderer as a parameter
 setupScrollBehavior(camera, directionalLight, scene, scene.fog.color, renderer);

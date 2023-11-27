@@ -1,6 +1,6 @@
 import GUI from "lil-gui";
 
-export function setupGUI(camera, material, myModel) {
+export function setupGUI(camera, material, myModel, plane) {
   const gui = new GUI();
 
   // Camera position controls
@@ -27,5 +27,46 @@ export function setupGUI(camera, material, myModel) {
       .add(myModel.rotation, "z", -Math.PI, Math.PI)
       .step(0.01)
       .name("Rotate Z");
+  }
+
+  // Plane position and rotation controls - only add if plane is not null
+  if (plane) {
+    const planeFolder = gui.addFolder("Plane");
+    planeFolder
+      .add(plane.position, "x")
+      .min(-100)
+      .max(100)
+      .step(0.1)
+      .name("Position X");
+    planeFolder
+      .add(plane.position, "y")
+      .min(-100)
+      .max(100)
+      .step(0.1)
+      .name("Position Y");
+    planeFolder
+      .add(plane.position, "z")
+      .min(-100)
+      .max(100)
+      .step(0.1)
+      .name("Position Z");
+    planeFolder
+      .add(plane.scale, "x")
+      .min(0.1)
+      .max(10)
+      .step(0.1)
+      .name("Scale X");
+    planeFolder
+      .add(plane.scale, "y")
+      .min(0.1)
+      .max(10)
+      .step(0.1)
+      .name("Scale Y");
+    planeFolder
+      .add(plane.scale, "z")
+      .min(0.1)
+      .max(10)
+      .step(0.1)
+      .name("Scale Z");
   }
 }
