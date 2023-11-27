@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@types/three": "^0.158.3",
+    "gsap": "^3.12.2",
+    "lil-gui": "^0.19.1",
+    "three": "^0.158.0",
+    "vercel": "^32.5.6"
+  }
+}
